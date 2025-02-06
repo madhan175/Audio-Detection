@@ -1,9 +1,5 @@
 # Audio Detection and Alert System
 
-# Project Demo
-
-Watch the demo video [here](assets/demo.mp4).
-
 ## Features
 - Real-time audio capture and noise reduction.
 - Keyword detection for suspicious activity.
