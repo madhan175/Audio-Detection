@@ -1,4 +1,4 @@
-# GuardAI Audio Detection and Alert System
+# Audio Detection and Alert System
 
 # Project Demo
 
