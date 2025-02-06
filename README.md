@@ -2,8 +2,7 @@
 
 ## Features
 - Real-time audio capture and noise reduction.
-- Keyword detection for suspicious activity.
-- Real-time alerts and event logging.
+- Turns our speech to text
 
 ## Setup
 1. Clone the repository.
