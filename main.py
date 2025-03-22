@@ -13,7 +13,7 @@ def main():
 
     reduce_noise(audio_file, cleaned_file)
 
-    keywords = ['help', 'answer', 'cheat']
+    keywords = ['help', 'answer', 'cheat', 'copy', 'whisper', 'phone', 'google', 'search', 'browser', 'text', 'message', 'call', 'assist', 'solution', 'hint']
     if keyword_detection(cleaned_file, keywords):
         event = "Suspicious Keyword Detected"
         timestamp = datetime.now()
