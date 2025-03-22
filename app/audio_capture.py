@@ -1,36 +1,48 @@
 import pyaudio
 import wave
 
-def capture_audio(audio_file, duration=10):
-    # Set up the audio stream
-    p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paInt16,
-                    channels=1,
-                    rate=44100,
-                    input=True,
-                    frames_per_buffer=1024)
+def capture_audio(output_file, duration=None):
+    chunk = 1024  # Record in chunks of 1024 samples
+    sample_format = pyaudio.paInt16  # 16 bits per sample
+    channels = 2
+    fs = 44100  # Record at 44100 samples per second
 
-    frames = []
+    p = pyaudio.PyAudio()  # Create an interface to PortAudio
 
     print("Recording...")
 
-    # Record audio for the specified duration
-    for _ in range(0, int(44100 / 1024 * duration)):
-        data = stream.read(1024)
-        frames.append(data)
+    stream = p.open(format=sample_format,
+                    channels=channels,
+                    rate=fs,
+                    frames_per_buffer=chunk,
+                    input=True)
 
-    print("Recording finished.")
+    frames = []  # Initialize array to store frames
 
-    # Stop the stream and close it
+    if duration is None:
+        try:
+            while True:
+                data = stream.read(chunk)
+                frames.append(data)
+        except KeyboardInterrupt:
+            print("Recording stopped by user.")
+    else:
+        for _ in range(0, int(fs / chunk * duration)):
+            data = stream.read(chunk)
+            frames.append(data)
+
+    # Stop and close the stream
     stream.stop_stream()
     stream.close()
+    # Terminate the PortAudio interface
     p.terminate()
 
-    # Save the recorded audio as a .wav file
-    with wave.open(audio_file, 'wb') as wf:
-        wf.setnchannels(1)
-        wf.setsampwidth(p.get_sample_size(pyaudio.paInt16))
-        wf.setframerate(44100)
-        wf.writeframes(b''.join(frames))
+    print("Finished recording.")
 
-    print(f"Audio saved to {audio_file}")
+    # Save the recorded data as a WAV file
+    wf = wave.open(output_file, 'wb')
+    wf.setnchannels(channels)
+    wf.setsampwidth(p.get_sample_size(sample_format))
+    wf.setframerate(fs)
+    wf.writeframes(b''.join(frames))
+    wf.close()
