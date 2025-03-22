@@ -9,18 +9,33 @@ def main():
     audio_file = 'assets/samples/audio_sample.wav'
     cleaned_file = 'assets/samples/cleaned_audio.wav'
 
-    capture_audio(audio_file, duration=10)
+    try:
+        while True:
+            # Step 1: Capture Audio
+            capture_audio(audio_file, duration=None)  # Set duration to None for continuous recording
 
-    reduce_noise(audio_file, cleaned_file)
+            # Step 2: Reduce Noise
+            reduce_noise(audio_file, cleaned_file)
 
-    keywords = ['help', 'answer', 'cheat', 'copy', 'whisper', 'phone', 'google', 'search', 'browser', 'text', 'message', 'call', 'assist', 'solution', 'hint']
-    if keyword_detection(cleaned_file, keywords):
-        event = "Suspicious Keyword Detected"
-        timestamp = datetime.now()
-        
-        send_alert(event, timestamp)
+            # Step 3: Keyword Detection
+            keywords = ['help', 'answer', 'cheat', 'copy', 'whisper', 'phone', 'google', 'search', 'browser', 'text', 'message', 'call', 'assist', 'solution', 'hint']
+            if keyword_detection(cleaned_file, keywords):
+                event = "Suspicious Keyword Detected"
+                timestamp = datetime.now()
+                
+                # Step 4: Send Alert
+                send_alert(event, timestamp)
 
-        log_event(event, timestamp)
+                # Step 5: Log Event
+                log_event(event, timestamp)
+
+            # Check for user input to stop recording
+            stop = input("Press 'q' to stop recording or any other key to continue: ")
+            if stop.lower() == 'q':
+                break
+
+    except KeyboardInterrupt:
+        print("Recording stopped by user.")
 
 if __name__ == "__main__":
     main()
