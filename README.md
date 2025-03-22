@@ -2,7 +2,7 @@
 
 ## Features
 - Real-time audio capture and noise reduction.
-- Turns our speech to text
+- Turns speech to text
 
 ## Setup
 1. Clone the repository.
