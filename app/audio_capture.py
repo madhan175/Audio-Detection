@@ -4,7 +4,7 @@ import wave
 def capture_audio(output_file, duration=None):
     chunk = 1024  # Record in chunks of 1024 samples
     sample_format = pyaudio.paInt16  # 16 bits per sample
-    channels = 2
+    channels = 1  # Change to 1 for mono recording
     fs = 44100  # Record at 44100 samples per second
 
     p = pyaudio.PyAudio()  # Create an interface to PortAudio
