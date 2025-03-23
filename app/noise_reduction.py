@@ -6,8 +6,6 @@ def reduce_noise(input_file, output_file="cleaned.wav", noise_reduction_factor=0
         params = wf.getparams()
         frames = wf.readframes(wf.getnframes())
         audio_data = np.frombuffer(frames, dtype=np.int16)
-
-    # Apply a simple noise reduction algorithm
     audio_data_cleaned = audio_data * noise_reduction_factor
     audio_data_cleaned = audio_data_cleaned.astype(np.int16)
 
